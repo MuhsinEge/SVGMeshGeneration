@@ -51,6 +51,8 @@ public class LevelGenerator : MeshGenerator
             pipe2MeshRenderer.material = pipeMaterial;
             pipe1.AddComponent<MeshCollider>();
             pipe2.AddComponent<MeshCollider>();
+            pipe1.transform.localScale = Vector3.one * 0.025f;
+            pipe2.transform.localScale = Vector3.one * 0.025f;
 
         }
         _ballGenerator.GenerateLevel(levelData);

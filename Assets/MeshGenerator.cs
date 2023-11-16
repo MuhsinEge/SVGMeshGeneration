@@ -15,10 +15,9 @@ public class MeshGenerator : MonoBehaviour
         List<Vector3> pathPoints;
         pathPoints = ParseSVGPath(SVGConverter.GenerateCoordinates(svgFolder));
         MoveToTargetPipeStart(ref pathPoints, targetPipeStart);
-        // Create a new mesh
+
         Mesh mesh = new Mesh();
 
-        // Vertices and UVs
         List<Vector3> vertices = new List<Vector3>();
         List<Vector2> uv = new List<Vector2>();
 
@@ -32,12 +31,10 @@ public class MeshGenerator : MonoBehaviour
                 Vector3 vertex = new Vector3(Mathf.Cos(angle) * radius + point.x, point.y, Mathf.Sin(angle) * radius + point.z);
                 vertices.Add(vertex);
 
-                // UV coordinates for mapping textures
                 uv.Add(new Vector2((float)j / segments, (float)i / (pathPoints.Count - 1)));
             }
         }
 
-        // Triangles
         int[] triangles = new int[segments * 6 * (pathPoints.Count - 1)];
 
         int triangleIndex = 0;
@@ -65,17 +62,10 @@ public class MeshGenerator : MonoBehaviour
             }
         }
 
-        // Assign the generated data to the mesh
         mesh.vertices = vertices.ToArray();
         mesh.uv = uv.ToArray();
         mesh.triangles = triangles;
-
-        // Set up mesh filter and renderer
-        // Recalculate normals to ensure smooth shading
         return mesh;
-
-        // Optional: Attach a material to the mesh renderer
-        // meshRenderer.material = YourMaterial;
     }
 
     private void MoveToTargetPipeStart(ref List<Vector3> pathPoints, Vector3 targetPipeStart)
@@ -86,8 +76,8 @@ public class MeshGenerator : MonoBehaviour
         for (int i = 0; i < pathPoints.Count; i++)
         {
            pathPoints[i] -= displacement;
-            pathPoints[i] += Vector3.up * 2;
-            pathPoints[i] -= Vector3.left * 0.05f; // Some magic number. tube_empty model is not symetric. 
+            pathPoints[i] += Vector3.up * 8;
+            pathPoints[i] += Vector3.right * 1.5f; // Some magic number. tube_empty model is not symetric. 
         }
     }
 

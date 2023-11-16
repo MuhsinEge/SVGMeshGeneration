@@ -18,7 +18,7 @@ public class GameService : IService
 
     public void NotifyLevelComplete()
     {
-        if(currentLevel < maxLevel)
+        if(currentLevel < maxLevel -1)
         {
             currentLevel++;
             levelCompleteEvent?.Invoke(this, currentLevel);
@@ -32,10 +32,5 @@ public class GameService : IService
     public void GameOver()
     {
         currentLevel = 0;
-    }
-
-    public void ShutDown()
-    {
-        throw new System.NotImplementedException();
     }
 }

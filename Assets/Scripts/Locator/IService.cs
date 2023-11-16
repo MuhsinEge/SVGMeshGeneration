@@ -6,6 +6,5 @@ namespace ServiceLocator
 {
     public interface IService
     {
-        public void ShutDown();
     }
 }

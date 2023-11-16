@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db6d1ab8317d50429d7a7c447ce9008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3.5
+  radius: 14
   segments: 16
   pipeMaterial: {fileID: 2100000, guid: b202b24f73e512249aeeea75d37f9f6c, type: 2}
 --- !u!114 &125007917

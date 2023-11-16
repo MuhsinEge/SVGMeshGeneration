@@ -45,7 +45,7 @@ MonoBehaviour:
     svgLevelFile: {fileID: 0}
   - tubePrefab: {fileID: 1762713462684325173, guid: 11eefa8a477351244a60205d868d8beb,
       type: 3}
-    spawnOffset: {x: 0, y: -3, z: 0}
+    spawnOffset: {x: 0, y: -4, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
     spawnRadius: 7
@@ -55,7 +55,7 @@ MonoBehaviour:
     svgLevelFile: {fileID: 4900000, guid: 7e1c434055c524e418b0e1a2581ccd6d, type: 3}
   - tubePrefab: {fileID: 1762713462684325173, guid: 11eefa8a477351244a60205d868d8beb,
       type: 3}
-    spawnOffset: {x: 0, y: -3, z: 0}
+    spawnOffset: {x: 0, y: -4, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
     spawnRadius: 7
@@ -65,7 +65,7 @@ MonoBehaviour:
     svgLevelFile: {fileID: 4900000, guid: 0e72bf74f0ed2c348a1c05ed6556c1fc, type: 3}
   - tubePrefab: {fileID: 1762713462684325173, guid: 11eefa8a477351244a60205d868d8beb,
       type: 3}
-    spawnOffset: {x: 0, y: -3, z: 0}
+    spawnOffset: {x: 0, y: -4, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
     spawnRadius: 7

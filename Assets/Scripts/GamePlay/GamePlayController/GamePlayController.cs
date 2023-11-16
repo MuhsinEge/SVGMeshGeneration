@@ -75,7 +75,7 @@ public class GamePlayController : MonoBehaviour
 
     private void LoadLevel()
     {
-        _currentLevelData = levelDatas.levels[5];
+        _currentLevelData = levelDatas.levels[_gameService.GetCurrentLevel()];
         uiController.HideStateUI();
         _ballCountOnGround = 0;
         _collectedBallCount = 0;
