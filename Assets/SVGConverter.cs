@@ -1,49 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Unity.VectorGraphics;
-using Unity.VectorGraphics.Editor;
+using System;
 using UnityEngine;
 
-public class SVGConverter : MonoBehaviour
+public static class SVGConverter 
 {
-    public TextAsset svgFolder;
-    static readonly char[] pathSeperators = { 'M', 'L', 'Z', 'H', 'V', 'C', 'S', 'Q', 'T', 'A' };
-    const string folderPath = "SVG/";
-    void Start()
+    private static readonly char[] PathSeparators = { 'M', 'L', 'Z', 'H', 'V', 'C', 'S', 'Q', 'T', 'A' };
+    private static readonly string pattern = "path\\s+d=\"([^\"]*)\"";
+
+    public static string[] GenerateCoordinates(TextAsset SvgText)
     {
-        Debug.Log(svgFolder.text);
-        string pattern = @"path\s+d=\"".*\""\s";//Getting path attribute from SVG
-        string pattern2 = @"\"".*\""\s";//Getting path attribute's value.
-        string svgPath = Regex.Match(svgFolder.text, pattern).Value;
-        svgPath = Regex.Match(svgPath, pattern2).Value;
-        svgPath = svgPath.Replace("\"", "");//Deleting unnecessary quotes
-        svgPath = putSeperatorPrefix(svgPath);
+        string pathAttribute = SVGConverter.GetAttributeValue(SvgText.text, pattern);
+        Debug.Log(pathAttribute);
+        string svgPath = RemoveQuotes(pathAttribute);
         Debug.Log(svgPath);
-        getCoordinates(svgPath);//For keeping first letters in pattern.
+        svgPath = AddSeparatorPrefix(svgPath);
+        Debug.Log(svgPath);
+        return GetCoordinates(svgPath);
     }
-    public static string[] getCoordinates(string pathString)
+
+    private static string GetAttributeValue(string input, string pattern)
+    {
+        Regex regex = new Regex(pattern);
+        Match match = regex.Match(input);
+        return match.Success ? match.Groups[1].Value : string.Empty;
+    }
+
+    private static string RemoveQuotes(string input)
+    {
+        return input.Replace("\"", "");
+    }
+
+    private static string AddSeparatorPrefix(string input)
+    {
+        foreach (char separator in PathSeparators)
+        {
+            input = input.Replace(separator.ToString(), "#" + separator);
+        }
+        return input;
+    }
+
+    private static string[] GetCoordinates(string pathString)
     {
         string[] lines = pathString.Split('#');
-        foreach (string line in lines)
+
+        // Skip the empty first element if present
+        if (string.IsNullOrEmpty(lines[0])){
+            lines =  lines.RemoveAt(0);
+        }
+
+        for (int i = 0; i < lines.Length; i++)
         {
-            Debug.Log(line);
+            Debug.Log(lines[i]);
         }
         return lines;
     }
 
-    private static string putSeperatorPrefix(string str)
+    public static T[] RemoveAt<T>(this T[] array, int index)
     {
-        for (int i = 0; i < pathSeperators.Length; i++)
+        if (index < 0 || index >= array.Length)
         {
-            string seperator = pathSeperators[i].ToString();
-            str = str.Replace(seperator, "#" + seperator);
+            return array;
         }
-        return str;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        T[] newArray = new T[array.Length - 1];
+        Array.Copy(array, 0, newArray, 0, index);
+        Array.Copy(array, index + 1, newArray, index, array.Length - index - 1);
+        return newArray;
     }
 }
