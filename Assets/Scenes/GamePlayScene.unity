@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 14
-  segments: 16
+  segments: 32
   pipeMaterial: {fileID: 2100000, guid: b202b24f73e512249aeeea75d37f9f6c, type: 2}
 --- !u!114 &125007917
 MonoBehaviour:

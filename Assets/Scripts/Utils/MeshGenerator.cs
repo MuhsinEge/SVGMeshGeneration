@@ -8,11 +8,10 @@ public class MeshGenerator : MonoBehaviour
 
     public float radius = 1.0f;
     public int segments = 16;
-
+    List<Vector3> pathPoints = new List<Vector3>();
     public Mesh GenerateTubeMesh(TextAsset svgFolder, Vector3 targetPipeStart)
     {
 
-        List<Vector3> pathPoints;
         pathPoints = ParseSVGPath(SVGConverter.GenerateCoordinates(svgFolder));
         MoveToTargetPipeStart(ref pathPoints, targetPipeStart);
 
@@ -188,6 +187,17 @@ public class MeshGenerator : MonoBehaviour
     //        for (int i = 1; i < pathPoints.Count; i++)
     //        {
     //            Debug.DrawLine(pathPoints[i - 1], pathPoints[i]);
+    //        }
+    //    }
+    //}
+
+    //private void OnDrawGizmos()
+    //{
+    //    if (pathPoints.Count > 0)
+    //    {
+    //        for (int i = 1; i < pathPoints.Count; i++)
+    //        {
+    //            Gizmos.DrawSphere(pathPoints[i], 0.1f);
     //        }
     //    }
     //}
