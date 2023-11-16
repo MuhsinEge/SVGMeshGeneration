@@ -18,7 +18,7 @@ namespace ServiceLocator
             Locator.Current.Register(new GameService());
 
             // Application is ready to start, load your main scene.
-            //SceneManager.LoadSceneAsync(1);
+            SceneManager.LoadSceneAsync(1);
         }
     }
 }

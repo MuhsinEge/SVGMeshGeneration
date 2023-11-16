@@ -3,23 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(MeshRenderer))]
 public class MeshGenerator : MonoBehaviour
 {
-    public TextAsset svgFolder;
-    public List<Vector3> pathPoints = new List<Vector3>();
+
     public float radius = 1.0f;
     public int segments = 16;
-    void Start()
+
+    public Mesh GenerateTubeMesh(TextAsset svgFolder, Vector3 targetPipeStart)
     {
+
+        List<Vector3> pathPoints;
         pathPoints = ParseSVGPath(SVGConverter.GenerateCoordinates(svgFolder));
-
-        GenerateTubeMesh();
-    }
-
-    void GenerateTubeMesh()
-    {
+        MoveToTargetPipeStart(ref pathPoints, targetPipeStart);
         // Create a new mesh
         Mesh mesh = new Mesh();
 
@@ -76,53 +71,25 @@ public class MeshGenerator : MonoBehaviour
         mesh.triangles = triangles;
 
         // Set up mesh filter and renderer
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
-        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-
-        meshFilter.mesh = mesh;
-
         // Recalculate normals to ensure smooth shading
-        mesh.RecalculateNormals();
+        return mesh;
 
         // Optional: Attach a material to the mesh renderer
         // meshRenderer.material = YourMaterial;
     }
 
-    Vector3[] CalculateNormals(List<Vector3> vertices, List<int> triangles)
+    private void MoveToTargetPipeStart(ref List<Vector3> pathPoints, Vector3 targetPipeStart)
     {
-        Vector3[] normals = new Vector3[vertices.Count];
+        var startingVector = Vector3.Distance(pathPoints[0],targetPipeStart) < Vector3.Distance(pathPoints[pathPoints.Count -1],targetPipeStart) ? 0 : pathPoints.Count -1;
+        Vector3 displacement = pathPoints[startingVector] - targetPipeStart;
 
-        // Initialize normals
-        for (int i = 0; i < normals.Length; i++)
+        for (int i = 0; i < pathPoints.Count; i++)
         {
-            normals[i] = Vector3.zero;
+           pathPoints[i] -= displacement;
+            pathPoints[i] += Vector3.up * 2;
+            pathPoints[i] -= Vector3.left * 0.05f; // Some magic number. tube_empty model is not symetric. 
         }
-
-        // Calculate normals for each triangle and accumulate
-        for (int i = 0; i < triangles.Count; i += 3)
-        {
-            int index1 = triangles[i];
-            int index2 = triangles[i + 1];
-            int index3 = triangles[i + 2];
-
-            Vector3 side1 = vertices[index2] - vertices[index1];
-            Vector3 side2 = vertices[index3] - vertices[index1];
-            Vector3 normal = Vector3.Cross(side1, side2).normalized;
-
-            normals[index1] += normal;
-            normals[index2] += normal;
-            normals[index3] += normal;
-        }
-
-        // Normalize the accumulated normals
-        for (int i = 0; i < normals.Length; i++)
-        {
-            normals[i] = normals[i].normalized;
-        }
-
-        return normals;
     }
-
 
     List<Vector3> ParseSVGPath(string[] pathPointDatas)
     {
@@ -156,7 +123,7 @@ public class MeshGenerator : MonoBehaviour
             }
         }
 
-        foreach(Vector3 x in pathPoints)
+        foreach (Vector3 x in pathPoints)
         {
             Debug.Log(x);
         }
@@ -224,14 +191,14 @@ public class MeshGenerator : MonoBehaviour
 
         return points;
     }
-    private void Update()
-    {
-        if(pathPoints.Count > 0)
-        {
-            for(int i = 1; i < pathPoints.Count; i++)
-            {
-                Debug.DrawLine(pathPoints[i], pathPoints[i ]);
-            }
-        }
-    }
+    //private void Update()
+    //{
+    //    if (pathPoints.Count > 0)
+    //    {
+    //        for (int i = 1; i < pathPoints.Count; i++)
+    //        {
+    //            Debug.DrawLine(pathPoints[i - 1], pathPoints[i]);
+    //        }
+    //    }
+    //}
 }

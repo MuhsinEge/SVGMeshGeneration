@@ -22,6 +22,7 @@ MonoBehaviour:
     ballOffset: 1
     ballCount: 25
     levelSuccessScore: 20
+    svgLevelFile: {fileID: 0}
   - tubePrefab: {fileID: 807931870986974064, guid: e048339504a15cc4e8562f02d9acedfc,
       type: 3}
     spawnOffset: {x: 9.2, y: -11.5, z: 0}
@@ -31,6 +32,7 @@ MonoBehaviour:
     ballOffset: 1
     ballCount: 25
     levelSuccessScore: 20
+    svgLevelFile: {fileID: 0}
   - tubePrefab: {fileID: 251718978476409279, guid: 2d07ceba2143ecd4cb340e1a89791ce6,
       type: 3}
     spawnOffset: {x: -14, y: -7.5, z: 0}
@@ -40,30 +42,34 @@ MonoBehaviour:
     ballOffset: 1
     ballCount: 25
     levelSuccessScore: 20
-  - tubePrefab: {fileID: 251718978476409279, guid: 2d07ceba2143ecd4cb340e1a89791ce6,
+    svgLevelFile: {fileID: 0}
+  - tubePrefab: {fileID: 1762713462684325173, guid: 11eefa8a477351244a60205d868d8beb,
       type: 3}
-    spawnOffset: {x: -14, y: -7.5, z: 0}
+    spawnOffset: {x: 0, y: -3, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
     spawnRadius: 7
     ballOffset: 1
     ballCount: 25
     levelSuccessScore: 20
-  - tubePrefab: {fileID: 251718978476409279, guid: 2d07ceba2143ecd4cb340e1a89791ce6,
+    svgLevelFile: {fileID: 4900000, guid: 7e1c434055c524e418b0e1a2581ccd6d, type: 3}
+  - tubePrefab: {fileID: 1762713462684325173, guid: 11eefa8a477351244a60205d868d8beb,
       type: 3}
-    spawnOffset: {x: -14, y: -7.5, z: 0}
+    spawnOffset: {x: 0, y: -3, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
     spawnRadius: 7
     ballOffset: 1
     ballCount: 25
     levelSuccessScore: 20
-  - tubePrefab: {fileID: 251718978476409279, guid: 2d07ceba2143ecd4cb340e1a89791ce6,
+    svgLevelFile: {fileID: 4900000, guid: 0e72bf74f0ed2c348a1c05ed6556c1fc, type: 3}
+  - tubePrefab: {fileID: 1762713462684325173, guid: 11eefa8a477351244a60205d868d8beb,
       type: 3}
-    spawnOffset: {x: -14, y: -7.5, z: 0}
+    spawnOffset: {x: 0, y: -3, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
     spawnRadius: 7
     ballOffset: 1
     ballCount: 25
     levelSuccessScore: 20
+    svgLevelFile: {fileID: 4900000, guid: cc501df6dfd1f294eb946260fcda854a, type: 3}

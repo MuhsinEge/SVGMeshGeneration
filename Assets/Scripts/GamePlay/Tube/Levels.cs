@@ -17,4 +17,5 @@ public class Level
     public float ballOffset = 1f;
     public int ballCount = 15;
     public int levelSuccessScore = 20;
+    public TextAsset svgLevelFile;
 }
