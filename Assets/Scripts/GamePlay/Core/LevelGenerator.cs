@@ -5,7 +5,7 @@ using ServiceLocator;
 using System;
 using System.Linq;
 
-public class LevelGenerator : MeshGenerator
+public class LevelGenerator : MonoBehaviour
 {
     GameObject currentTube;
     BallGenerator _ballGenerator;
@@ -42,7 +42,7 @@ public class LevelGenerator : MeshGenerator
             var pipe2MeshFilter = pipe2.AddComponent<MeshFilter>();
             var pipe2MeshRenderer = pipe2.AddComponent<MeshRenderer>();
 
-            var mesh = GenerateTubeMesh(levelData.svgLevelFile, currentTube.transform.localPosition);
+            var mesh = MeshGenerator.GenerateTubeMesh(levelData.svgLevelFile, currentTube.transform.localPosition);
 
             pipe1MeshFilter.mesh = mesh;
             pipe2MeshFilter.mesh = mesh;

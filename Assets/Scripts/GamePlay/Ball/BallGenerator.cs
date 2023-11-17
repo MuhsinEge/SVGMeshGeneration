@@ -34,9 +34,7 @@ public class BallGenerator : MonoBehaviour
     }
 
     Vector3 GetUniqueWorldPos(Level level) {
-        var pos = new Vector3();
-        pos = Random.insideUnitSphere * level.spawnRadius;
-        pos.z = 0;
+        var pos = Random.insideUnitSphere * level.spawnRadius;
         pos += transform.position + level.spawnOffset;
         return pos;
     }

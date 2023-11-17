@@ -5,12 +5,12 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 
-public class MeshGenerator : MonoBehaviour
+public static class MeshGenerator
 {
 
-    public float radius = 1.0f;
-    public int segments = 16;
-    public Mesh GenerateTubeMesh(TextAsset svgFolder, Vector3 targetPipeStart)
+    public const float radius = 14f;
+    public const int segments = 32;
+    public static Mesh GenerateTubeMesh(TextAsset svgFolder, Vector3 targetPipeStart)
     {
         var coordinates = SVGConverter.GenerateCoordinates(svgFolder);
         List<Vector3> pathPoints = ParseSVGPath(coordinates);
@@ -68,7 +68,7 @@ public class MeshGenerator : MonoBehaviour
         return mesh;
     }
 
-    private void MoveToTargetPipeStart(ref List<Vector3> pathPoints, Vector3 targetPipeStart)
+    private static void MoveToTargetPipeStart(ref List<Vector3> pathPoints, Vector3 targetPipeStart)
     {
         if(Vector3.Distance(pathPoints[0], targetPipeStart) > Vector3.Distance(pathPoints[pathPoints.Count - 1], targetPipeStart))
         {
@@ -84,7 +84,7 @@ public class MeshGenerator : MonoBehaviour
         }
     }
 
-    List<Vector3> ParseSVGPath(string[] pathPointDatas)
+    static List<Vector3> ParseSVGPath(string[] pathPointDatas)
     {
         List<Vector3> pathPoints = new List<Vector3>();
 
@@ -118,7 +118,7 @@ public class MeshGenerator : MonoBehaviour
         return pathPoints;
     }
 
-    Vector3 ParseVector(string vectorString)
+    static Vector3 ParseVector(string vectorString)
     {
         string[] components = vectorString.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -137,7 +137,7 @@ public class MeshGenerator : MonoBehaviour
         }
     }
 
-    List<Vector3> ParseVectorList(string vectorListString)
+    static List<Vector3> ParseVectorList(string vectorListString)
     {
         string[] vectorStrings = vectorListString.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
         List<Vector3> vectors = new List<Vector3>();
@@ -161,7 +161,7 @@ public class MeshGenerator : MonoBehaviour
         return vectors;
     }
 
-    List<Vector3> BezierCurve(Vector3 startPoint, List<Vector3> controlPoints)
+    static List<Vector3> BezierCurve(Vector3 startPoint, List<Vector3> controlPoints)
     {
         List<Vector3> points = new List<Vector3>();
 
@@ -184,92 +184,93 @@ public class MeshGenerator : MonoBehaviour
         return points;
     }
 
-    public Mesh GenerateTubeMeshWIP(TextAsset svgFolder, Vector3 targetPipeStart) // DRAWS BETTER ON VECTOR 3 SVG, BUT WORSE ON VECTOR 2
-    {
-        List<Vector3> pathPoints;
-        List<Vector3> vertices = new List<Vector3>();
-        pathPoints = ParseSVGPath(SVGConverter.GenerateCoordinates(svgFolder));
-        MoveToTargetPipeStart(ref pathPoints, targetPipeStart);
+    //public Mesh GenerateTubeMeshWIP(TextAsset svgFolder, Vector3 targetPipeStart) // DRAWS BETTER ON VECTOR 3 SVG, BUT WORSE ON VECTOR 2
+    //{
+    //    List<Vector3> pathPoints;
+    //    List<Vector3> vertices = new List<Vector3>();
+    //    pathPoints = ParseSVGPath(SVGConverter.GenerateCoordinates(svgFolder));
+    //    MoveToTargetPipeStart(ref pathPoints, targetPipeStart);
 
-        Mesh mesh = new Mesh();
+    //    Mesh mesh = new Mesh();
 
 
-        List<Vector2> uv = new List<Vector2>();
+    //    List<Vector2> uv = new List<Vector2>();
 
-        GameObject previousParentObject = null;
-        GameObject parentObject = null;
+    //    GameObject previousParentObject = null;
+    //    GameObject parentObject = null;
 
-        for (int i = 0; i < pathPoints.Count; i++)
-        {
-            Vector3 point = pathPoints[i];
-            parentObject = new GameObject("ParentObject_" + i);
-            parentObject.transform.position = pathPoints[i];
-            List<GameObject> children = new List<GameObject>();
+    //    for (int i = 0; i < pathPoints.Count; i++)
+    //    {
+    //        Vector3 point = pathPoints[i];
+    //        parentObject = new GameObject("ParentObject_" + i);
+    //        parentObject.transform.position = pathPoints[i];
+    //        List<GameObject> children = new List<GameObject>();
 
-            for (int j = 0; j <= segments; j++)
-            {
-                float angle = 2 * Mathf.PI * j / segments;
-                Vector3 vertex = new Vector3(Mathf.Cos(angle) * radius + point.x, point.y, Mathf.Sin(angle) * radius + point.z);
-                var child = new GameObject("child" + j);
-                children.Add(child);
-                child.transform.position = vertex;
-                child.transform.parent = parentObject.transform;
+    //        for (int j = 0; j <= segments; j++)
+    //        {
+    //            float angle = 2 * Mathf.PI * j / segments;
+    //            Vector3 vertex = new Vector3(Mathf.Cos(angle) * radius + point.x, point.y, Mathf.Sin(angle) * radius + point.z);
+    //            var child = new GameObject("child" + j);
+    //            children.Add(child);
+    //            child.transform.position = vertex;
+    //            child.transform.parent = parentObject.transform;
 
-                uv.Add(new Vector2((float)j / segments, (float)i / (pathPoints.Count - 1)));
-            }
+    //            uv.Add(new Vector2((float)j / segments, (float)i / (pathPoints.Count - 1)));
+    //        }
 
-            if (previousParentObject != null)
-            {
-                var direction = parentObject.transform.position - previousParentObject.transform.position;
-                parentObject.transform.rotation = Quaternion.FromToRotation(Vector3.up / 100, direction);
-                //parentObject.transform.LookAt(previousParentObject.transform, Vector3.down * 1000);
-                Destroy(previousParentObject);
-            }
+    //        if (previousParentObject != null)
+    //        {
+    //            var direction = parentObject.transform.position - previousParentObject.transform.position;
+    //            parentObject.transform.rotation = Quaternion.FromToRotation(Vector3.up / 100, direction);
+    //            //parentObject.transform.LookAt(previousParentObject.transform, Vector3.down * 1000);
+    //            Destroy(previousParentObject);
+    //        }
 
-            foreach (var child in children)
-            {
-                vertices.Add(child.transform.position);
-            }
-            previousParentObject = parentObject;
-        }
+    //        foreach (var child in children)
+    //        {
+    //            vertices.Add(child.transform.position);
+    //        }
+    //        previousParentObject = parentObject;
+    //    }
 
-        if (parentObject != null)
-        {
-            Destroy(parentObject);
-        }
+    //    if (parentObject != null)
+    //    {
+    //        Destroy(parentObject);
+    //    }
 
-        int[] triangles = new int[segments * 6 * (pathPoints.Count - 1)];
+    //    int[] triangles = new int[segments * 6 * (pathPoints.Count - 1)];
 
-        int triangleIndex = 0;
+    //    int triangleIndex = 0;
 
-        for (int i = 0; i < pathPoints.Count - 1; i++)
-        {
-            for (int j = 0; j < segments; j++)
-            {
-                int next = (j + 1) % segments;
+    //    for (int i = 0; i < pathPoints.Count - 1; i++)
+    //    {
+    //        for (int j = 0; j < segments; j++)
+    //        {
+    //            int next = (j + 1) % segments;
 
-                int current = i * (segments + 1) + j;
-                int currentNext = i * (segments + 1) + next;
-                int nextRow = (i + 1) * (segments + 1) + j;
-                int nextRowNext = (i + 1) * (segments + 1) + next;
+    //            int current = i * (segments + 1) + j;
+    //            int currentNext = i * (segments + 1) + next;
+    //            int nextRow = (i + 1) * (segments + 1) + j;
+    //            int nextRowNext = (i + 1) * (segments + 1) + next;
 
-                // First triangle
-                triangles[triangleIndex++] = current;
-                triangles[triangleIndex++] = currentNext;
-                triangles[triangleIndex++] = nextRow;
+    //            // First triangle
+    //            triangles[triangleIndex++] = current;
+    //            triangles[triangleIndex++] = currentNext;
+    //            triangles[triangleIndex++] = nextRow;
 
-                // Second triangle
-                triangles[triangleIndex++] = currentNext;
-                triangles[triangleIndex++] = nextRowNext;
-                triangles[triangleIndex++] = nextRow;
-            }
-        }
+    //            // Second triangle
+    //            triangles[triangleIndex++] = currentNext;
+    //            triangles[triangleIndex++] = nextRowNext;
+    //            triangles[triangleIndex++] = nextRow;
+    //        }
+    //    }
 
-        mesh.vertices = vertices.ToArray();
-        mesh.uv = uv.ToArray();
-        mesh.triangles = triangles;
-        return mesh;
-    }
+    //    mesh.vertices = vertices.ToArray();
+    //    mesh.uv = uv.ToArray();
+    //    mesh.triangles = triangles;
+    //    return mesh;
+    //}
+
     //private void Update()
     //{
     //    if (pathPoints.Count > 0)

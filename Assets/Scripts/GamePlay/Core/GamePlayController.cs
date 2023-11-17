@@ -42,7 +42,7 @@ public class GamePlayController : MonoBehaviour
         _collectedBallCount++;
         CheckGameState();
         InactivateBall(ballCollider);
-        ballCollider.gameObject.tag = "CollectedBall";
+        
     }
     private void OnBallFellToGround(object sender, Collider ballCollider)
     {
@@ -53,13 +53,13 @@ public class GamePlayController : MonoBehaviour
         _ballCountOnGround++;
         CheckGameState();
         InactivateBall(ballCollider);
-        ballCollider.gameObject.tag = "BallOnGround";
     }
 
     private void InactivateBall(Collider ballCollider)
     {
         var rigidBody = ballCollider.GetComponent<Rigidbody>();
         rigidBody.constraints = RigidbodyConstraints.None;
+        ballCollider.gameObject.tag = "InactiveBall";
     }
 
     private void CheckGameState()

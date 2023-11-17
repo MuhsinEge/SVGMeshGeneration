@@ -10,14 +10,8 @@ public static class SVGConverter
     public static string[] GenerateCoordinates(TextAsset SvgText)
     {
         string pathAttribute = GetAttributeValue(SvgText.text, pattern);
-        Debug.Log("Path Attribute: " + pathAttribute);
-
         string svgPath = RemoveQuotes(pathAttribute);
-        Debug.Log("SVG Path: " + svgPath);
-
         svgPath = AddSeparatorPrefix(svgPath);
-        Debug.Log("Modified SVG Path: " + svgPath);
-
         return GetCoordinates(svgPath);
     }
 
@@ -45,16 +39,9 @@ public static class SVGConverter
     private static string[] GetCoordinates(string pathString)
     {
         string[] lines = pathString.Split('#');
-
-        // Skip the empty first element if present
         if (string.IsNullOrEmpty(lines[0]))
         {
             lines = lines.RemoveAt(0);
-        }
-
-        foreach (string line in lines)
-        {
-            Debug.Log(line);
         }
         return lines;
     }

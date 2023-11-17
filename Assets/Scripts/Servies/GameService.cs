@@ -6,7 +6,6 @@ using System;
 
 public class GameService : IService
 {
-    public EventHandler<int> levelCompleteEvent;
     int currentLevel;
     const int maxLevel = 6;
     public GameService() { }
@@ -21,7 +20,6 @@ public class GameService : IService
         if(currentLevel < maxLevel -1)
         {
             currentLevel++;
-            levelCompleteEvent?.Invoke(this, currentLevel);
         }
         else
         {
