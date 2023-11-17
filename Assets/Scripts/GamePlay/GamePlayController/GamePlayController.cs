@@ -18,6 +18,7 @@ public class GamePlayController : MonoBehaviour
     private int _collectedBallCount;
     private int _ballCountOnGround;
     private Level _currentLevelData;
+    [SerializeField] ParticleSystem successParticle;
 
     private void Awake()
     {
@@ -61,6 +62,7 @@ public class GamePlayController : MonoBehaviour
             {
                 uiController.ShowStateUI(true);
                 _gameService.NotifyLevelComplete();
+                successParticle.Play();
                 Debug.Log("LEVEL COMPLETE");
             }
             else
