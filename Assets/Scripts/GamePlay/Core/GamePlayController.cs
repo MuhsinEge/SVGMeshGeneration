@@ -76,7 +76,6 @@ public class GamePlayController : MonoBehaviour
             _gameService.NotifyLevelComplete();
             particleController.PlaySuccessParticle();
             isLevelFinished = true;
-            Debug.Log("LEVEL COMPLETE");
         }
         else
         {
@@ -84,8 +83,6 @@ public class GamePlayController : MonoBehaviour
             {
                 isLevelFinished = true;
                 uiController.ShowStateUI(false);
-                Debug.Log("LEVEL FAILED");
- 
             }
         }
     }
