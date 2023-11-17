@@ -12,6 +12,7 @@ public class TubeRotator : MonoBehaviour
     Rigidbody _rigidBody;
     private bool _isTouched;
     private float _lastTouchedPositionX;
+    private float _lastTouchedPositionY;
     private float _rotationAmount;
 
     void Start()
@@ -34,33 +35,39 @@ public class TubeRotator : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             float touchedPositionX = Input.mousePosition.x;
+            float touchedPositionY = Input.mousePosition.y;
 
             if (_isTouched == false)
             {
                 _lastTouchedPositionX = touchedPositionX;
+                _lastTouchedPositionY = touchedPositionY;
                 _isTouched = true;
                 return;
             }
 
             _isTouched = true;
-            var dragDistance = touchedPositionX - _lastTouchedPositionX;
+            var dragDistanceX = touchedPositionX - _lastTouchedPositionX;
+            var dragDistanceY = touchedPositionY - _lastTouchedPositionY;
+
+            var dragDistance = Mathf.Abs(dragDistanceX) > Mathf.Abs(dragDistanceY) ? dragDistanceX : dragDistanceY;
 
             if (Mathf.Abs(dragDistance) > dragThreshold)
             {
                 var rotationModifier = Mathf.Clamp(dragDistance * sensitivity * Time.deltaTime, -2.5f, 2.5f);
                 _rotationAmount += rotationModifier;
-
+                _lastTouchedPositionY = touchedPositionY;
                 _lastTouchedPositionX = touchedPositionX;
             }
             else
             {
-                
+                _lastTouchedPositionY = touchedPositionY;
                 _lastTouchedPositionX = touchedPositionX;
             }
         }
         else
         {
             _isTouched = false;
+            _lastTouchedPositionY = 0f;
             _lastTouchedPositionX = 0f;
         }
     }
