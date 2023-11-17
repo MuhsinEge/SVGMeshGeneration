@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BallGenerator : MonoBehaviour
 {
+    public List<Color> colors = new List<Color>();
     const float ballMaxVelocity = 50f;
     List<Rigidbody> _ballList;
+    
 
     public void GenerateLevel(Transform parent, Level level)
     {
@@ -22,6 +25,9 @@ public class BallGenerator : MonoBehaviour
         while (_ballList.Count < level.ballCount)
         {
             Rigidbody instantiatedOBject = Instantiate(level.ballPrefab, GetUniqueWorldPos(level), Quaternion.identity);
+            var instantiatedObjectMeshRenderer = instantiatedOBject.GetComponent<MeshRenderer>();
+            var randomColor = colors[Random.Range(0, colors.Count)];
+            instantiatedObjectMeshRenderer.material.color = randomColor;
             instantiatedOBject.transform.parent = ballParent.transform;
             _ballList.Add(instantiatedOBject);
         }

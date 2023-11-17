@@ -6,11 +6,12 @@ using System;
 
 public class GamePlayController : MonoBehaviour
 {
-    public CupCollector cupCollector;
-    public GroundCollector groundCollector;
-    public ScoreController scoreController;
-    public UIController uiController;
-    public LevelGenerator levelGenerator;
+    [SerializeField] CupCollector cupCollector;
+    [SerializeField] GroundCollector groundCollector;
+    [SerializeField] ScoreController scoreController;
+    [SerializeField] UIController uiController;
+    [SerializeField] LevelGenerator levelGenerator;
+    [SerializeField] ParticleController particleController;
 
     public Levels levelDatas;
 
@@ -19,9 +20,7 @@ public class GamePlayController : MonoBehaviour
     private int _ballCountOnGround;
     private Level _currentLevelData;
 
-    [SerializeField] ParticleSystem successParticle;
-    [SerializeField] ParticleSystem collectBallParticle;
-    [SerializeField] ParticleSystem ballOnGroundParticle;
+    
     bool isLevelFinished;
 
     private void Awake()
@@ -38,7 +37,7 @@ public class GamePlayController : MonoBehaviour
     {
         if(!isLevelFinished) 
         {
-            collectBallParticle.Play();
+            particleController.PlayCollectBallParticle();
         }
         _collectedBallCount++;
         CheckGameState();
@@ -49,7 +48,7 @@ public class GamePlayController : MonoBehaviour
     {
         if (!isLevelFinished)
         {
-            ballOnGroundParticle.Play();
+            particleController.PlayBallOnGroundParticle();
         }
         _ballCountOnGround++;
         CheckGameState();
@@ -75,7 +74,7 @@ public class GamePlayController : MonoBehaviour
         {
             uiController.ShowStateUI(true);
             _gameService.NotifyLevelComplete();
-            successParticle.Play();
+            particleController.PlaySuccessParticle();
             isLevelFinished = true;
             Debug.Log("LEVEL COMPLETE");
         }
