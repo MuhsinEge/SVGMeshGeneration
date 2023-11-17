@@ -18,7 +18,7 @@ MonoBehaviour:
     spawnOffset: {x: -0.3, y: -4.7, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
-    spawnRadius: 7
+    spawnRadius: 6
     ballOffset: 1
     ballCount: 70
     levelSuccessScore: 50
@@ -28,7 +28,7 @@ MonoBehaviour:
     spawnOffset: {x: 9.2, y: -11.5, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
-    spawnRadius: 7
+    spawnRadius: 6
     ballOffset: 1
     ballCount: 70
     levelSuccessScore: 50
@@ -38,7 +38,7 @@ MonoBehaviour:
     spawnOffset: {x: -14, y: -7.5, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
-    spawnRadius: 7
+    spawnRadius: 6
     ballOffset: 1
     ballCount: 70
     levelSuccessScore: 50
@@ -48,7 +48,7 @@ MonoBehaviour:
     spawnOffset: {x: 0, y: -4, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
-    spawnRadius: 7
+    spawnRadius: 6
     ballOffset: 1
     ballCount: 70
     levelSuccessScore: 50
@@ -58,7 +58,7 @@ MonoBehaviour:
     spawnOffset: {x: 0, y: -4, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
-    spawnRadius: 7
+    spawnRadius: 6
     ballOffset: 1
     ballCount: 70
     levelSuccessScore: 50
@@ -68,7 +68,7 @@ MonoBehaviour:
     spawnOffset: {x: 0, y: -4, z: 0}
     ballPrefab: {fileID: 1843839549054532097, guid: a52d7f492d6412d4499348b1eb0519c8,
       type: 3}
-    spawnRadius: 7
+    spawnRadius: 6
     ballOffset: 1
     ballCount: 70
     levelSuccessScore: 50

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 
 public class MeshGenerator : MonoBehaviour
@@ -8,11 +10,10 @@ public class MeshGenerator : MonoBehaviour
 
     public float radius = 1.0f;
     public int segments = 16;
-    List<Vector3> pathPoints = new List<Vector3>();
     public Mesh GenerateTubeMesh(TextAsset svgFolder, Vector3 targetPipeStart)
     {
-
-        pathPoints = ParseSVGPath(SVGConverter.GenerateCoordinates(svgFolder));
+        var coordinates = SVGConverter.GenerateCoordinates(svgFolder);
+        List<Vector3> pathPoints = ParseSVGPath(coordinates);
         MoveToTargetPipeStart(ref pathPoints, targetPipeStart);
 
         Mesh mesh = new Mesh();
@@ -79,7 +80,7 @@ public class MeshGenerator : MonoBehaviour
         {
            pathPoints[i] -= displacement;
             pathPoints[i] += Vector3.up * 8;
-            pathPoints[i] += Vector3.right * 1.5f; // Some magic number. tube_empty model is not symetric. 
+            pathPoints[i] += Vector3.left; // Some magic number. tube_empty model is not symetric. 
         }
     }
 
@@ -107,17 +108,12 @@ public class MeshGenerator : MonoBehaviour
                     currentPoint = controlPoints[controlPoints.Count - 1];
                     break;
                 case 'V':
-                    float y = float.Parse(parameters);
+                    float y = float.Parse(parameters, CultureInfo.InvariantCulture);
                     Vector3 endPoint = new Vector3(currentPoint.x, y, 0);
                     pathPoints.Add(endPoint);
                     currentPoint = endPoint;
                     break;
             }
-        }
-
-        foreach (Vector3 x in pathPoints)
-        {
-            Debug.Log(x);
         }
         return pathPoints;
     }
@@ -128,8 +124,10 @@ public class MeshGenerator : MonoBehaviour
 
         if (components.Length >= 2)
         {
-            float x = float.Parse(components[0]);
-            float y = float.Parse(components[1]);
+            float x = float.Parse(components[0], CultureInfo.InvariantCulture);
+            float y = float.Parse(components[1], CultureInfo.InvariantCulture);
+            x = Mathf.Round(x * 1000f) / 1000f;
+            y = Mathf.Round(y * 1000f) / 1000f;
             return new Vector3(x, y, 0);
         }
         else
@@ -148,8 +146,10 @@ public class MeshGenerator : MonoBehaviour
         {
             if (i + 1 < vectorStrings.Length)
             {
-                float x = float.Parse(vectorStrings[i]);
-                float y = float.Parse(vectorStrings[i + 1]);
+                float x = float.Parse(vectorStrings[i], CultureInfo.InvariantCulture);
+                float y = float.Parse(vectorStrings[i + 1], CultureInfo.InvariantCulture);
+                x = Mathf.Round(x * 1000f) / 1000f;
+                y = Mathf.Round(y * 1000f) / 1000f;
                 vectors.Add(new Vector3(x, y, 0));
             }
             else

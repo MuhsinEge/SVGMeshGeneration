@@ -10,15 +10,19 @@ public class GamePlayController : MonoBehaviour
     public GroundCollector groundCollector;
     public ScoreController scoreController;
     public UIController uiController;
-
     public LevelGenerator levelGenerator;
+
     public Levels levelDatas;
 
     private GameService _gameService;
     private int _collectedBallCount;
     private int _ballCountOnGround;
     private Level _currentLevelData;
+
     [SerializeField] ParticleSystem successParticle;
+    [SerializeField] ParticleSystem collectBallParticle;
+    [SerializeField] ParticleSystem ballOnGroundParticle;
+    bool isLevelFinished;
 
     private void Awake()
     {
@@ -32,6 +36,10 @@ public class GamePlayController : MonoBehaviour
 
     private void OnBallCollected(object sender, Collider ballCollider)
     {
+        if(!isLevelFinished) 
+        {
+            collectBallParticle.Play();
+        }
         _collectedBallCount++;
         CheckGameState();
         InactivateBall(ballCollider);
@@ -39,6 +47,10 @@ public class GamePlayController : MonoBehaviour
     }
     private void OnBallFellToGround(object sender, Collider ballCollider)
     {
+        if (!isLevelFinished)
+        {
+            ballOnGroundParticle.Play();
+        }
         _ballCountOnGround++;
         CheckGameState();
         InactivateBall(ballCollider);
@@ -55,33 +67,40 @@ public class GamePlayController : MonoBehaviour
     {
         var scoreTxt = _collectedBallCount + "/" + _currentLevelData.levelSuccessScore;
         scoreController.UpdateScore(scoreTxt);
-
-        if (_ballCountOnGround + _collectedBallCount == _currentLevelData.ballCount)
+        if(isLevelFinished)
         {
-            if (_collectedBallCount >= _currentLevelData.levelSuccessScore)
+            return;
+        }
+        if (_collectedBallCount >= _currentLevelData.levelSuccessScore)
+        {
+            uiController.ShowStateUI(true);
+            _gameService.NotifyLevelComplete();
+            successParticle.Play();
+            isLevelFinished = true;
+            Debug.Log("LEVEL COMPLETE");
+        }
+        else
+        {
+            if (_ballCountOnGround + _collectedBallCount == _currentLevelData.ballCount)
             {
-                uiController.ShowStateUI(true);
-                _gameService.NotifyLevelComplete();
-                successParticle.Play();
-                Debug.Log("LEVEL COMPLETE");
-            }
-            else
-            {
+                isLevelFinished = true;
                 uiController.ShowStateUI(false);
                 Debug.Log("LEVEL FAILED");
+ 
             }
         }
-
-
     }
 
     private void LoadLevel()
     {
-        _currentLevelData = levelDatas.levels[_gameService.GetCurrentLevel()];
+        var currentLevel = _gameService.GetCurrentLevel();
+        uiController.SetLevelText(currentLevel+1);
+        _currentLevelData = levelDatas.levels[currentLevel];
         uiController.HideStateUI();
         _ballCountOnGround = 0;
         _collectedBallCount = 0;
         levelGenerator.LoadLevel(_currentLevelData);
+        isLevelFinished = false;
         CheckGameState();
     }
 }

@@ -24,6 +24,7 @@ public class LevelGenerator : MeshGenerator
         }
 
         currentTube = Instantiate(levelData.tubePrefab, transform);
+
         if (levelData.svgLevelFile != null)
         {
             var pipe1 = new GameObject("Pipe1");
@@ -55,6 +56,6 @@ public class LevelGenerator : MeshGenerator
             pipe2.transform.localScale = Vector3.one * 0.025f;
 
         }
-        _ballGenerator.GenerateLevel(levelData);
+        _ballGenerator.GenerateLevel(currentTube.transform,levelData);
     }
 }

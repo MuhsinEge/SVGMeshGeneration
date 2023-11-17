@@ -7,8 +7,8 @@ using System;
 public class GameService : IService
 {
     public EventHandler<int> levelCompleteEvent;
-    public int currentLevel;
-    public const int maxLevel = 6;
+    int currentLevel;
+    const int maxLevel = 6;
     public GameService() { }
 
     public int GetCurrentLevel()

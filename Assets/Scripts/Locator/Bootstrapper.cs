@@ -13,6 +13,7 @@ namespace ServiceLocator
         {
             // Initialize default service locator.
             Locator.Initialize();
+            Application.targetFrameRate = 60;
 
             // Register all your services next.
             Locator.Current.Register(new GameService());

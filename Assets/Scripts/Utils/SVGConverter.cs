@@ -9,18 +9,21 @@ public static class SVGConverter
 
     public static string[] GenerateCoordinates(TextAsset SvgText)
     {
-        string pathAttribute = SVGConverter.GetAttributeValue(SvgText.text, pattern);
-        Debug.Log(pathAttribute);
+        string pathAttribute = GetAttributeValue(SvgText.text, pattern);
+        Debug.Log("Path Attribute: " + pathAttribute);
+
         string svgPath = RemoveQuotes(pathAttribute);
-        Debug.Log(svgPath);
+        Debug.Log("SVG Path: " + svgPath);
+
         svgPath = AddSeparatorPrefix(svgPath);
-        Debug.Log(svgPath);
+        Debug.Log("Modified SVG Path: " + svgPath);
+
         return GetCoordinates(svgPath);
     }
 
     private static string GetAttributeValue(string input, string pattern)
     {
-        Regex regex = new Regex(pattern);
+        Regex regex = new Regex(pattern, RegexOptions.CultureInvariant);
         Match match = regex.Match(input);
         return match.Success ? match.Groups[1].Value : string.Empty;
     }
@@ -44,13 +47,14 @@ public static class SVGConverter
         string[] lines = pathString.Split('#');
 
         // Skip the empty first element if present
-        if (string.IsNullOrEmpty(lines[0])){
-            lines =  lines.RemoveAt(0);
+        if (string.IsNullOrEmpty(lines[0]))
+        {
+            lines = lines.RemoveAt(0);
         }
 
-        for (int i = 0; i < lines.Length; i++)
+        foreach (string line in lines)
         {
-            Debug.Log(lines[i]);
+            Debug.Log(line);
         }
         return lines;
     }

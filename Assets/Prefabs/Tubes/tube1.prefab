@@ -98,8 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08fc8ca99dcecf641a1f6fbeabe26f27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragThreshold: 0
-  sensitivity: 0.5
+  dragThreshold: 0.2
+  sensitivity: 4
+  rotationSmoothTime: 0.25
 --- !u!64 &8668789240148950434
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -148,4 +149,4 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1

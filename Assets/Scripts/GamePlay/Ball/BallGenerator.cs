@@ -7,7 +7,7 @@ public class BallGenerator : MonoBehaviour
     const float ballMaxVelocity = 50f;
     List<Rigidbody> _ballList;
 
-    public void GenerateLevel(Level level)
+    public void GenerateLevel(Transform parent, Level level)
     {
         if(_ballList != null)
         {
@@ -16,10 +16,13 @@ public class BallGenerator : MonoBehaviour
                 Destroy(ball.gameObject);
             }
         }
+        GameObject ballParent = new GameObject("Balls");
+        ballParent.transform.parent = parent;
         _ballList = new List<Rigidbody>();
         while (_ballList.Count < level.ballCount)
         {
             Rigidbody instantiatedOBject = Instantiate(level.ballPrefab, GetUniqueWorldPos(level), Quaternion.identity);
+            instantiatedOBject.transform.parent = ballParent.transform;
             _ballList.Add(instantiatedOBject);
         }
     }
